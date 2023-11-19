@@ -57,4 +57,4 @@ def predict(url: str):
         hash_table.create(new_hash.__dict__, typecast=True)
         print(final_urls)
         return final_urls
-    return hash_value_entry["fields"]["Url"]
+    return hash_value_entry["fields"]["Urls"]

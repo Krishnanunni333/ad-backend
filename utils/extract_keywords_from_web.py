@@ -54,13 +54,13 @@ def get_keywords_using_gpt(words: list[str], website_url: str) -> set[str]:
                 model="gpt-4",
                 messages=[{"role": "system", "content": 'You should behave like an advanced keyword filter.\
                            Analyze the keywords that is passed and output the keywords that is most relevant and context based.'},
-                            {"role": "user", "content": f'Extract 5 keywords from the given list of keywords. I scraped these keywords from the website.\
-                              The URL of the website is {website_url}.\
-                            Please consider the context of the website.\
-                            Output the country of the website with keywords.\
-                            Include the audience of the website in keywords.\
-                            Current keywords are : {words}. Only return the relevant keywords as comma seperated values.\
-                            Do not return any other text.'},
+                            {"role": "user", "content": f'Extract 5 relevant keywords from the given list of keywords, scraped from the website with the URL {website_url}. \
+                             Consider the context of the website.\
+                            Output the country associated with the website along with the keywords. \
+                             Additionally, include the audience of the website in the keywords. \
+                             The current list of keywords is: {words}.\
+                            Return only the most relevant keywords as a comma-separated list, avoiding any other text.\
+                                Ensure the results are idempotent.'},
                 ])
 
         # Extract generated keywords from the response

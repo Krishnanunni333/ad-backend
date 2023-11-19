@@ -8,9 +8,7 @@ import requests
 from nltk.tokenize import word_tokenize
 from nltk.probability import FreqDist
 
-# Download NLTK resources
-# nltk.download('punkt')
-# nltk.download('stopwords')
+
 
 def get_base_domain(url: str) -> str:
     extracted = tldextract.extract(url)

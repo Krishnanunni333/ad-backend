@@ -10,3 +10,7 @@ class UrlCreate(BaseModel):
 
 class UrlStore(UrlCreate):
     Keywords: list[str]
+
+class HashCreate(BaseModel):
+    HashValue: str
+    Urls: list[str]

@@ -27,7 +27,7 @@ def convert(url: str) -> list[str]:
         ],
         max_tokens=300,
         )
-        print(type(response.choices[0].message.content))
+        
         result = [
             item.strip()
             for item in response.choices[0].message.content.split(",")

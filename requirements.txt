@@ -1,0 +1,9 @@
+fastapi
+pyairtable
+python-dotenv
+openai
+spacy
+beautifulsoup4
+gensim
+tldextract
+rake-nltk

@@ -41,7 +41,7 @@ def create_image_url(url: UrlCreate):
     table = airtable_api.table(AIRTABLE_BASE_ID, AIRTABLE_URL_TABLE_ID)
     Keywords = convert(url.Url)
     print(Keywords)
-    new_url = UrlStore(Id=url.Id, Url=url.Url, Keywords=Keywords)
+    new_url = UrlStore(Url=url.Url, Keywords=Keywords)
     return table.create(new_url.__dict__, typecast=True)
 
 @app.get("/predict")

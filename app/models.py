@@ -6,9 +6,7 @@ class EmployeeCreate(BaseModel):
     Sector: str
 
 class UrlCreate(BaseModel):
-    Id: int
     Url: str
 
 class UrlStore(UrlCreate):
-    Url: str
     Keywords: list[str]

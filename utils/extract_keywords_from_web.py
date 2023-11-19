@@ -7,6 +7,7 @@ import tldextract
 import requests
 from nltk.tokenize import word_tokenize
 from nltk.probability import FreqDist
+from fastapi import HTTPException
 
 
 
@@ -24,20 +25,23 @@ def get_website_text(url: str) -> str:
 
 # Function to extract keywords from text
 def extract_keywords(text: str) -> list[str]:
-    # Tokenize the text
-    words = word_tokenize(text)
+    try:
+        # Tokenize the text
+        words = word_tokenize(text)
 
-    # Remove stopwords (common words that usually don't contribute much to the meaning)
-    stop_words = set(stopwords.words('english'))
-    filtered_words = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
+        # Remove stopwords (common words that usually don't contribute much to the meaning)
+        stop_words = set(stopwords.words('english'))
+        filtered_words = [word.lower() for word in words if word.isalnum() and word.lower() not in stop_words]
 
-    # Calculate word frequencies
-    freq_dist = FreqDist(filtered_words)
+        # Calculate word frequencies
+        freq_dist = FreqDist(filtered_words)
 
-    common_words = list()
-    for word in freq_dist.most_common(20):
-        common_words.append(word)
-    # print(common_words)
+        common_words = list()
+        for word in freq_dist.most_common(20):
+            common_words.append(word)
+        # print(common_words)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     return common_words
 
 
@@ -67,8 +71,7 @@ def get_keywords_using_gpt(words: list[str], website_url: str) -> set[str]:
             ])
         # print(result)
     except Exception as e:
-        print(f"Exception occured!\n {e}")
-        return
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
 
     return result
 
@@ -77,16 +80,18 @@ def get_website_content(url: str) -> str:
     try:
         response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=10)
         response.raise_for_status()  # Raise an HTTPError for bad responses
-        return response.text
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching website content: {e}")
-        return ""
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
+    return response.text
 
 def get_keywords(url: str) -> list[str]:
-    website_text = get_website_content(url)
-    words = extract_keywords(website_text)
-    keywords = list(get_keywords_using_gpt(words, url))
-    keywords.append(get_base_domain(url))
+    try:
+        website_text = get_website_content(url)
+        words = extract_keywords(website_text)
+        keywords = list(get_keywords_using_gpt(words, url))
+        keywords.append(get_base_domain(url))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     return keywords
 
 

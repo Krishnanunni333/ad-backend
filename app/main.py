@@ -40,6 +40,7 @@ def predict(url: str):
 
     keywords = get_keywords(url)
     hash_value = generate_unordered_hash(keywords)
+    print(hash_value)
     filter_formula = f"{{HashValue}}='{hash_value}'"
     hash_table = airtable_api.table(AIRTABLE_BASE_ID, AIRTABLE_HASH_TABLE_ID)
     hash_value_entry = hash_table.first(formula=filter_formula)

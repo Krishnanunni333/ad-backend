@@ -2,6 +2,7 @@ from openai import OpenAI
 import os
 from dotenv import load_dotenv
 import ast
+from fastapi import HTTPException
 
 
 def predict_using_gpt(keywords: list[str], n: int, data: list[dict]) -> list[str]:
@@ -30,8 +31,7 @@ def predict_using_gpt(keywords: list[str], n: int, data: list[dict]) -> list[str
         # print(result)
 
     except Exception as e:
-        print(f"Exception occured!\n {e}")
-        return
+        raise HTTPException(status_code=500, detail=f"Internal Server Error: {str(e)}")
     return result
 
 

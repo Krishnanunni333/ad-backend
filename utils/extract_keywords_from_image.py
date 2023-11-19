@@ -18,7 +18,8 @@ def convert(url: str) -> list[str]:
             "content": [
                 {"type": "text", "text": "Extract keywords from the image. Also extract the websites, business domian, target audience,\
                   technology if any, occasion if any, and any other information that is mentioned in the image.\
-                  Specification regarding the person in the image is not needed.The output should be comma seperated values.\
+                 The generated keywords should be idompotent. It should be perfect for search engine optimization. \
+                  Specification regarding people in the image is not needed.The output should be comma seperated values.\
                   There should not be any other messages."},
                 {
                 "type": "image_url",
